@@ -12,9 +12,7 @@ import pytest
 class TestRAGPipeline:
     """Integration tests for RAGPipeline with mock LLM and real FAISS."""
 
-    def _make_pipeline(
-        self, small_faiss_retriever, mock_rag_chain, mock_sentiment_classifier
-    ):
+    def _make_pipeline(self, small_faiss_retriever, mock_rag_chain, mock_sentiment_classifier):
         """Create a RAGPipeline with injected dependencies."""
         from app.core.rag_pipeline import RAGPipeline
 
@@ -71,9 +69,7 @@ class TestRAGPipeline:
         pipeline = self._make_pipeline(
             small_faiss_retriever, mock_rag_chain, mock_sentiment_classifier
         )
-        result = pipeline.query(
-            "What was Microsoft Azure growth?", retrieval_mode="hybrid"
-        )
+        result = pipeline.query("What was Microsoft Azure growth?", retrieval_mode="hybrid")
         assert result["retrieval_mode"] == "hybrid"
 
     def test_pipeline_includes_sentiment(

@@ -18,9 +18,7 @@ import sys
 from typing import Dict, List
 
 # Ensure project root on path when run standalone
-sys.path.insert(
-    0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-)
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 
 def run_retrieval_eval(qa_pairs: List[dict]) -> Dict[str, dict]:

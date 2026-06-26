@@ -173,9 +173,7 @@ class TestIngestEndpoint:
         )
         assert resp.status_code == 401
 
-    def test_ingest_with_admin_key_accepts_txt(
-        self, flask_test_client, admin_api_key, tmp_path
-    ):
+    def test_ingest_with_admin_key_accepts_txt(self, flask_test_client, admin_api_key, tmp_path):
         """POST /ingest with admin key and a valid TXT file must return 200."""
         from io import BytesIO
 
@@ -192,9 +190,7 @@ class TestIngestEndpoint:
         assert "doc_id" in data
         assert "skipped" in data
 
-    def test_ingest_unsupported_file_type_returns_400(
-        self, flask_test_client, admin_api_key
-    ):
+    def test_ingest_unsupported_file_type_returns_400(self, flask_test_client, admin_api_key):
         """Uploading an unsupported file type must return 400."""
         from io import BytesIO
 

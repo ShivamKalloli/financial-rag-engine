@@ -34,9 +34,7 @@ class TestRAGChain:
         captured_input = {}
 
         mock_chain = MagicMock()
-        mock_chain.invoke.side_effect = lambda x: (
-            captured_input.update(x) or "Test answer"
-        )
+        mock_chain.invoke.side_effect = lambda x: (captured_input.update(x) or "Test answer")
 
         chain = RAGChain.__new__(RAGChain)
         chain._llm = MagicMock()
@@ -132,9 +130,7 @@ class TestRAGChain:
                 mock_ollama.return_value = MagicMock()
 
                 # Patch the import inside get_llm
-                with patch.dict(
-                    "sys.modules", {"langchain_community.llms": MagicMock()}
-                ):
+                with patch.dict("sys.modules", {"langchain_community.llms": MagicMock()}):
                     # Since we can't easily test the import branch, test settings path
                     assert mock_settings.llm_backend == "ollama"
 

@@ -90,14 +90,10 @@ query_response = ns.model(
             fields.Nested(source_doc),
             description="Retrieved context chunks used",
         ),
-        "sentiment": fields.Nested(
-            sentiment_result, description="Sentiment of retrieved context"
-        ),
+        "sentiment": fields.Nested(sentiment_result, description="Sentiment of retrieved context"),
         "latency_ms": fields.Float(description="Total pipeline latency in ms"),
         "retrieval_mode": fields.String(description="Mode actually used"),
-        "model_used": fields.String(
-            description="LLM identifier (e.g. groq/llama3-8b-8192)"
-        ),
+        "model_used": fields.String(description="LLM identifier (e.g. groq/llama3-8b-8192)"),
     },
 )
 
@@ -113,9 +109,7 @@ ingest_response = ns.model(
 retrieve_only_response = ns.model(
     "RetrieveOnlyResponse",
     {
-        "chunks": fields.List(
-            fields.Nested(source_doc), description="Retrieved chunk list"
-        ),
+        "chunks": fields.List(fields.Nested(source_doc), description="Retrieved chunk list"),
         "latency_ms": fields.Float(description="Retrieval-only latency in ms"),
     },
 )
@@ -124,14 +118,10 @@ health_response = ns.model(
     "HealthResponse",
     {
         "status": fields.String(description="Service status", example="ok"),
-        "llm_backend": fields.String(
-            description="Active LLM backend", enum=["groq", "ollama"]
-        ),
+        "llm_backend": fields.String(description="Active LLM backend", enum=["groq", "ollama"]),
         "index_size": fields.Integer(description="Number of vectors in FAISS index"),
         "model_loaded": fields.Boolean(description="True if embedding model is ready"),
-        "sentiment_model_loaded": fields.Boolean(
-            description="True if sentiment model is loaded"
-        ),
+        "sentiment_model_loaded": fields.Boolean(description="True if sentiment model is loaded"),
         "version": fields.String(description="API version"),
     },
 )

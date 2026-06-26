@@ -50,9 +50,7 @@ class TestRAGPipelineUnit:
         mock_chain.answer.return_value = "Mocked LLM answer citing apple.txt"
         mock_chain.model_used = "mock-groq-model"
 
-        mock_sentiment.classify_bulk.return_value = [
-            {"label": "positive", "confidence": 0.9}
-        ]
+        mock_sentiment.classify_bulk.return_value = [{"label": "positive", "confidence": 0.9}]
 
         pipeline = RAGPipeline(
             retriever=mock_retriever,
@@ -60,9 +58,7 @@ class TestRAGPipelineUnit:
             sentiment_classifier=mock_sentiment,
         )
 
-        resp = pipeline.query(
-            "What was Apple's Q4 revenue?", top_k=3, retrieval_mode="hybrid"
-        )
+        resp = pipeline.query("What was Apple's Q4 revenue?", top_k=3, retrieval_mode="hybrid")
 
         # Assertions
         assert resp["answer"] == "Mocked LLM answer citing apple.txt"
@@ -81,9 +77,7 @@ class TestRAGPipelineUnit:
         mock_chain.answer.assert_called_once_with(
             "What was Apple's Q4 revenue?", chunks, stream=False
         )
-        mock_sentiment.classify_bulk.assert_called_once_with(
-            ["Apple Q4 revenue was $89.5B"]
-        )
+        mock_sentiment.classify_bulk.assert_called_once_with(["Apple Q4 revenue was $89.5B"])
 
     def test_query_flow_empty_chunks(self):
         """Should handle empty chunk list gracefully, returning
@@ -94,9 +88,7 @@ class TestRAGPipelineUnit:
         mock_sentiment = MagicMock()
 
         mock_retriever.search.return_value = []
-        mock_chain.answer.return_value = (
-            "I cannot answer this from the available documents."
-        )
+        mock_chain.answer.return_value = "I cannot answer this from the available documents."
         mock_chain.model_used = "mock-groq-model"
 
         pipeline = RAGPipeline(

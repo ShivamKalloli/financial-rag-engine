@@ -17,9 +17,7 @@ from typing import Dict, List
 import pytest
 
 # Ensure project root on path when run standalone
-sys.path.insert(
-    0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-)
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 
 def _extract_key_terms(text: str) -> List[str]:

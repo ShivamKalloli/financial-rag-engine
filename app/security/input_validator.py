@@ -144,7 +144,5 @@ def validate_retrieval_mode(mode: Optional[str]) -> str:
     if mode is None:
         return "hybrid"
     if mode not in allowed:
-        raise ValidationError(
-            f"retrieval_mode must be one of {sorted(allowed)}, got {mode!r}."
-        )
+        raise ValidationError(f"retrieval_mode must be one of {sorted(allowed)}, got {mode!r}.")
     return mode

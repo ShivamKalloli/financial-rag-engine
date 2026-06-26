@@ -20,9 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def main() -> None:
     """Scan a directory and ingest all supported documents."""
-    parser = argparse.ArgumentParser(
-        description="Ingest financial documents into the FAISS index."
-    )
+    parser = argparse.ArgumentParser(description="Ingest financial documents into the FAISS index.")
     parser.add_argument(
         "--path",
         required=True,

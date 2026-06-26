@@ -183,9 +183,7 @@ class TestHybridRetriever:
 
     def test_semantic_mode(self, small_faiss_retriever):
         """Semantic-only mode must return results."""
-        results = small_faiss_retriever.search(
-            "Apple revenue", top_k=3, mode="semantic"
-        )
+        results = small_faiss_retriever.search("Apple revenue", top_k=3, mode="semantic")
         assert len(results) > 0
 
     def test_keyword_mode(self, small_faiss_retriever):

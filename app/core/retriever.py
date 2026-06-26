@@ -274,12 +274,7 @@ class HybridRetriever:
         # Auto-load if index files exist on disk (for standalone / cli / eval script usage)
         index_path = settings.faiss_index_path
         meta_path = settings.metadata_path
-        if (
-            index_path
-            and meta_path
-            and os.path.isfile(index_path)
-            and os.path.isfile(meta_path)
-        ):
+        if index_path and meta_path and os.path.isfile(index_path) and os.path.isfile(meta_path):
             try:
                 self.load(index_path, meta_path)
             except Exception:
@@ -406,9 +401,7 @@ class HybridRetriever:
         def _add_rrf(results: List[dict], prefix: str) -> None:
             for rank, chunk in enumerate(results):
                 cid = chunk.get("chunk_id", f"{prefix}_{rank}")
-                rrf_scores[cid] = rrf_scores.get(cid, 0.0) + (
-                    1.0 / (self._RRF_K + rank + 1)
-                )
+                rrf_scores[cid] = rrf_scores.get(cid, 0.0) + (1.0 / (self._RRF_K + rank + 1))
                 chunk_map[cid] = chunk
 
         _add_rrf(faiss_results, "faiss")

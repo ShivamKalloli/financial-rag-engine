@@ -250,9 +250,7 @@ def flask_test_client(
     # Patch RAGPipeline to use mock chain and classifier
     from app.core import rag_pipeline as rp_module
 
-    monkeypatch.setattr(
-        rp_module.RAGPipeline, "_get_chain", lambda self: mock_rag_chain
-    )
+    monkeypatch.setattr(rp_module.RAGPipeline, "_get_chain", lambda self: mock_rag_chain)
     monkeypatch.setattr(
         rp_module.RAGPipeline, "_get_sentiment", lambda self: mock_sentiment_classifier
     )

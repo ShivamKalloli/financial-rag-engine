@@ -35,7 +35,7 @@ jobs:
         run: black --check app/ tests/ scripts/
 
       - name: Lint — isort (check)
-        run: isort --check-only app/ tests/ scripts/
+        run: isort --check-only --profile black app/ tests/ scripts/
 
       - name: Security — dependency scan
         run: safety check -r requirements.txt

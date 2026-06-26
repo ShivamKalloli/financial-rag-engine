@@ -8,8 +8,13 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from app.monitoring.logger import (JSONFormatter, get_logger, hash_question,
-                                   log_request, new_request_id)
+from app.monitoring.logger import (
+    JSONFormatter,
+    get_logger,
+    hash_question,
+    log_request,
+    new_request_id,
+)
 
 
 @pytest.mark.unit

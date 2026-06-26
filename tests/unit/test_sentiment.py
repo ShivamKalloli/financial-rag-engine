@@ -63,9 +63,7 @@ class TestSentimentClassifier:
         import numpy as np
 
         mock_pipeline = MagicMock()
-        mock_pipeline.predict_proba.return_value = np.array(
-            [[0.1, 0.2, 0.7] for _ in range(10)]
-        )
+        mock_pipeline.predict_proba.return_value = np.array([[0.1, 0.2, 0.7] for _ in range(10)])
 
         from app.core.sentiment import SentimentClassifier
 

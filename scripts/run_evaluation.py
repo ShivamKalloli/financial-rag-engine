@@ -77,15 +77,9 @@ def main() -> None:
     _print_table(
         "Retrieval Evaluation Results",
         {
-            "Precision@1": {
-                m: retrieval_results[m]["precision_at_1"] for m in retrieval_results
-            },
-            "Precision@3": {
-                m: retrieval_results[m]["precision_at_3"] for m in retrieval_results
-            },
-            "Precision@5": {
-                m: retrieval_results[m]["precision_at_5"] for m in retrieval_results
-            },
+            "Precision@1": {m: retrieval_results[m]["precision_at_1"] for m in retrieval_results},
+            "Precision@3": {m: retrieval_results[m]["precision_at_3"] for m in retrieval_results},
+            "Precision@5": {m: retrieval_results[m]["precision_at_5"] for m in retrieval_results},
             "MRR": {m: retrieval_results[m]["mrr"] for m in retrieval_results},
         },
     )
@@ -104,8 +98,7 @@ def main() -> None:
 
     comp_status = "✅ PASS" if hybrid_p5 > keyword_p5 else "❌ FAIL"
     print(
-        f"  Hybrid P@5 > Keyword P@5:     {comp_status} "
-        f"({hybrid_p5:.4f} vs {keyword_p5:.4f})"
+        f"  Hybrid P@5 > Keyword P@5:     {comp_status} " f"({hybrid_p5:.4f} vs {keyword_p5:.4f})"
     )
 
     # --- Step 3: Generation evaluation ---
@@ -121,9 +114,7 @@ def main() -> None:
         print(f"    ✓ Generation results saved to {gen_path}")
 
         avg_rouge = gen_results.get("avg_rouge_l", 0.0)
-        print(
-            f"  ROUGE-L > 0.25: {'✅ PASS' if avg_rouge > 0.25 else '❌ FAIL'} ({avg_rouge:.4f})"
-        )
+        print(f"  ROUGE-L > 0.25: {'✅ PASS' if avg_rouge > 0.25 else '❌ FAIL'} ({avg_rouge:.4f})")
     else:
         print("\n[3/3] Generation evaluation skipped (--skip-generation flag set).")
 

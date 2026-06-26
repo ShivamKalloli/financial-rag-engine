@@ -9,14 +9,14 @@ import time
 from typing import List
 
 from app.config import settings
-from app.monitoring.logger import (get_logger, hash_question, log_request,
-                                   new_request_id)
-from app.monitoring.metrics import (rag_latency_seconds, rag_requests_total,
-                                    rag_retrieval_latency_seconds,
-                                    rag_retrieval_score)
-from app.security.input_validator import (sanitize_question,
-                                          validate_retrieval_mode,
-                                          validate_top_k)
+from app.monitoring.logger import get_logger, hash_question, log_request, new_request_id
+from app.monitoring.metrics import (
+    rag_latency_seconds,
+    rag_requests_total,
+    rag_retrieval_latency_seconds,
+    rag_retrieval_score,
+)
+from app.security.input_validator import sanitize_question, validate_retrieval_mode, validate_top_k
 
 logger = get_logger(__name__)
 
@@ -161,9 +161,7 @@ class RAGPipeline:
         rag_latency_seconds.observe(total_elapsed)
         rag_requests_total.labels(status="success", retrieval_mode=retrieval_mode).inc()
 
-        model_used = (
-            chain.model_used if hasattr(chain, "model_used") else settings.llm_backend
-        )
+        model_used = chain.model_used if hasattr(chain, "model_used") else settings.llm_backend
 
         # --- 8. Log request (question hash only, never plaintext) ---
         log_request(
