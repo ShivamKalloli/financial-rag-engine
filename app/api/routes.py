@@ -21,12 +21,9 @@ from app.config import settings
 from app.core.rag_pipeline import RAGPipeline
 from app.monitoring.logger import get_logger
 from app.security.auth import get_auth_manager
-from app.security.input_validator import (
-    ValidationError,
-    sanitize_question,
-    validate_retrieval_mode,
-    validate_top_k,
-)
+from app.security.input_validator import (ValidationError, sanitize_question,
+                                          validate_retrieval_mode,
+                                          validate_top_k)
 from app.security.rate_limiter import get_rate_limiter
 
 logger = get_logger(__name__)
