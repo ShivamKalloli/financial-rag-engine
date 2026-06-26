@@ -238,7 +238,7 @@ class RetrieveOnlyEndpoint(Resource):
         try:
             question = sanitize_question(raw_question)
             top_k = validate_top_k(int(top_k_raw) if top_k_raw.isdigit() else 5)
-            mode = validate_retrieval_mode(mode_raw)
+            validate_retrieval_mode(mode_raw)
         except (ValidationError, ValueError) as exc:
             return {"message": str(exc)}, 400
 

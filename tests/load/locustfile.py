@@ -14,9 +14,16 @@ Run with:
         --host http://localhost:5000
 """
 
+import itertools
+import os
 import random
+import threading
 
+from dotenv import load_dotenv
 from locust import HttpUser, between, task
+
+# Load environment variables from .env file
+load_dotenv()
 
 # ---------------------------------------------------------------------------
 # 20 diverse financial questions for load testing
@@ -44,15 +51,6 @@ FINANCIAL_QUESTIONS = [
     "What was Apple's Greater China revenue in Q4 2023?",
     "What was Microsoft's Intelligent Cloud revenue FY2023?",
 ]
-
-import os
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
-
-import itertools
-import threading
 
 # Rotate through all CLIENT_API_KEYS defined in environment
 CLIENT_KEYS_STR = os.getenv("CLIENT_API_KEYS", "client_key_1,client_key_2")
