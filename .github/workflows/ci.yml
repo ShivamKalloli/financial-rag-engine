@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Lint — flake8
+        run: |
+          flake8 app/ tests/ scripts/ \
+            --max-line-length=100 \
+            --extend-ignore=E203,W503
+
+      - name: Lint — black (check)
+        run: black --check app/ tests/ scripts/
+
+      - name: Lint — isort (check)
+        run: isort --check-only app/ tests/ scripts/
+
+      - name: Security — dependency scan
+        run: safety check -r requirements.txt
+        continue-on-error: true  # Don't fail build on advisory-only issues
+
+      - name: Seed sample data
+        run: python scripts/seed_sample_data.py
+
+      - name: Ingest documents
+        run: python scripts/ingest_documents.py --path data/raw
+
+      - name: Train sentiment model
+        run: python scripts/train_sentiment.py
+
+      - name: Run unit tests
+        run: |
+          pytest tests/unit -v \
+            --cov=app \
+            --cov-report=term-missing \
+            --cov-fail-under=80 \
+            -m "not slow"
+        env:
+          GROQ_API_KEY: ""
+          ADMIN_API_KEY: test_admin_key
+          CLIENT_API_KEYS: test_client_key_1,test_client_key_2
+          LOG_LEVEL: WARNING
+
+      - name: Run integration tests
+        run: |
+          pytest tests/integration -v -m "not slow"
+        env:
+          GROQ_API_KEY: ""
+          ADMIN_API_KEY: test_admin_key
+          CLIENT_API_KEYS: test_client_key_1,test_client_key_2
+          LOG_LEVEL: WARNING
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: htmlcov/

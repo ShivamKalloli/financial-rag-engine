@@ -1,0 +1,28 @@
+version: "3.9"
+
+# Isolated test environment — no real API keys required
+services:
+  rag-api-test:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    environment:
+      - GROQ_API_KEY=
+      - ADMIN_API_KEY=test_admin_key
+      - CLIENT_API_KEYS=test_client_key_1,test_client_key_2
+      - FAISS_INDEX_PATH=data/index/faiss.index
+      - METADATA_PATH=data/index/metadata.pkl
+      - EMBEDDING_MODEL=all-MiniLM-L6-v2
+      - LLM_MODEL=llama3-8b-8192
+      - LOG_LEVEL=WARNING
+      - FLASK_ENV=testing
+    volumes:
+      - ../data:/app/data
+      - ../models:/app/models
+    command: >
+      sh -c "
+        python scripts/seed_sample_data.py &&
+        python scripts/ingest_documents.py --path data/raw &&
+        python scripts/train_sentiment.py &&
+        pytest tests/unit tests/integration -v --cov=app --cov-fail-under=80
+      "

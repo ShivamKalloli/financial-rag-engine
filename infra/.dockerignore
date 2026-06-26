@@ -1,0 +1,31 @@
+# Docker build context exclusions
+.env
+.env.*
+.git/
+.github/
+.gitignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+*.egg-info/
+
+# Test files (not needed in prod image)
+tests/
+results/
+
+# Data and models (mounted as volumes at runtime)
+data/
+models/
+
+# Documentation
+README.md
+*.md
+
+# IDE
+.vscode/
+.idea/
